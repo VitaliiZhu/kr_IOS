@@ -34,7 +34,7 @@ enum APIError: Error {
 class ExchangeRateFetcher {
     
     // NOTE: You MUST replace this with your actual API key obtained from exchangerate-api.com
-    private let apiKey = "YOUR_API_KEY_HERE"
+    private let apiKey = "3e76b4d2abe44b028108724b"
     private let baseURL = "https://v6.exchangerate-api.com/v6/"
     
     /**
