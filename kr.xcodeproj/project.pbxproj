@@ -11,8 +11,10 @@
 		23789F602EBDD3C200DEB3CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F5F2EBDD3C200DEB3CB /* ContentView.swift */; };
 		23789F622EBDD3C700DEB3CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23789F612EBDD3C700DEB3CB /* Assets.xcassets */; };
 		23789F652EBDD3C700DEB3CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23789F642EBDD3C700DEB3CB /* Preview Assets.xcassets */; };
-		23789F6C2EBDD78A00DEB3CB /* fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F6B2EBDD78A00DEB3CB /* fetcher.swift */; };
 		23789F6E2EBDDA5200DEB3CB /* ExchangeRateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F6D2EBDDA5200DEB3CB /* ExchangeRateViewModel.swift */; };
+		23789F702EC7056100DEB3CB /* conversion_rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F6F2EC7056100DEB3CB /* conversion_rates.swift */; };
+		23789F722EC70AC900DEB3CB /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F712EC70AC900DEB3CB /* AppSettings.swift */; };
+		23789F742EC70AF000DEB3CB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F732EC70AF000DEB3CB /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,8 +23,10 @@
 		23789F5F2EBDD3C200DEB3CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		23789F612EBDD3C700DEB3CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23789F642EBDD3C700DEB3CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		23789F6B2EBDD78A00DEB3CB /* fetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetcher.swift; sourceTree = "<group>"; };
 		23789F6D2EBDDA5200DEB3CB /* ExchangeRateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateViewModel.swift; sourceTree = "<group>"; };
+		23789F6F2EC7056100DEB3CB /* conversion_rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = conversion_rates.swift; sourceTree = "<group>"; };
+		23789F712EC70AC900DEB3CB /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		23789F732EC70AF000DEB3CB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +59,10 @@
 		23789F5C2EBDD3C200DEB3CB /* kr */ = {
 			isa = PBXGroup;
 			children = (
+				23789F732EC70AF000DEB3CB /* SettingsView.swift */,
+				23789F712EC70AC900DEB3CB /* AppSettings.swift */,
+				23789F6F2EC7056100DEB3CB /* conversion_rates.swift */,
 				23789F6D2EBDDA5200DEB3CB /* ExchangeRateViewModel.swift */,
-				23789F6B2EBDD78A00DEB3CB /* fetcher.swift */,
 				23789F5D2EBDD3C200DEB3CB /* krApp.swift */,
 				23789F5F2EBDD3C200DEB3CB /* ContentView.swift */,
 				23789F612EBDD3C700DEB3CB /* Assets.xcassets */,
@@ -144,8 +150,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				23789F602EBDD3C200DEB3CB /* ContentView.swift in Sources */,
+				23789F702EC7056100DEB3CB /* conversion_rates.swift in Sources */,
 				23789F6E2EBDDA5200DEB3CB /* ExchangeRateViewModel.swift in Sources */,
-				23789F6C2EBDD78A00DEB3CB /* fetcher.swift in Sources */,
+				23789F742EC70AF000DEB3CB /* SettingsView.swift in Sources */,
+				23789F722EC70AC900DEB3CB /* AppSettings.swift in Sources */,
 				23789F5E2EBDD3C200DEB3CB /* krApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

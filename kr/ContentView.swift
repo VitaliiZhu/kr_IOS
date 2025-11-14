@@ -1,22 +1,23 @@
 import SwiftUI
 
+// --- NEW: Add the AppSettings to the environment ---
+// Note: You must also ensure your ViewModel has access to the baseCurrency,
+// likely by updating its fetchRates function signature.
+
 struct ContentView: View {
-    // 1. Instantiate the ViewModel using @StateObject
+    // 1. Instantiate both the ViewModel and the Settings Model
+    @StateObject private var settings = AppSettings()
     @StateObject private var viewModel = ExchangeRateViewModel()
     
-    // Example target currencies to display in the list
-    let displayCurrencies = ["EUR", "JPY", "GBP", "CAD", "AUD", "INR"]
-    
+    // The list of currencies to display is now taken from settings
     var body: some View {
         NavigationView {
             VStack {
-                // --- 2. Loading State ---
+                // ... (Loading, Error, and Empty States remain the same) ...
                 if viewModel.isLoading {
                     ProgressView("Fetching rates...")
                         .padding()
                 }
-                
-                // --- 3. Error State ---
                 else if let error = viewModel.errorMessage {
                     Text(error)
                         .foregroundColor(.red)
@@ -24,7 +25,7 @@ struct ContentView: View {
                         .padding()
                 }
                 
-                // --- 4. Data Loaded State ---
+                // --- 4. Data Loaded State (UPDATED) ---
                 else if let rates = viewModel.ratesResponse {
                     List {
                         // Header with base currency and last update time
@@ -33,10 +34,11 @@ struct ContentView: View {
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
-                        
-                        // Display the conversion rates for selected currencies
+                            
+                        // Display the conversion rates for SELECTED currencies from settings
                         Section("Conversion Rates") {
-                            ForEach(displayCurrencies, id: \.self) { currencyCode in
+                            // !!! UPDATED to use settings.displayedCurrencies !!!
+                            ForEach(settings.displayedCurrencies, id: \.self) { currencyCode in
                                 HStack {
                                     Text(currencyCode)
                                         .bold()
@@ -55,7 +57,6 @@ struct ContentView: View {
                     .listStyle(.insetGrouped)
                 }
                 
-                // --- 5. Initial/Empty State (Optional) ---
                 else {
                     Text("No exchange rates data available.")
                         .foregroundColor(.secondary)
@@ -63,14 +64,36 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Global Exchange Rates")
-            // 6. Use .task to call the async function when the view appears
+            
+            // 6. Use .task and .onChange to call the fetch function
+            // !!! UPDATED to use settings.baseCurrency !!!
             .task {
-                await viewModel.fetchRates(baseCurrency: "USD") // or "EUR", etc.
+                await viewModel.fetchRates(baseCurrency: settings.baseCurrency)
+            }
+            
+            // Refetches data immediately when the base currency changes
+            .onChange(of: settings.baseCurrency) { oldValue, newValue in
+                if oldValue != newValue {
+                    Task {
+                        await viewModel.fetchRates(baseCurrency: newValue)
+                    }
+                }
+            }
+            
+            // --- NEW: Toolbar for Settings Button ---
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        SettingsView(settings: settings)
+                    } label: {
+                        Label("Settings", systemImage: "gearshape")
+                    }
+                }
             }
         }
     }
     
-    // Helper function to format the UTC time string for display
+    // Helper function... (remains the same)
     private func formatUpdateTime(_ utcTime: String) -> String {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]

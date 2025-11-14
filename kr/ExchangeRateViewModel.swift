@@ -16,7 +16,7 @@ class ExchangeRateViewModel: ObservableObject {
     private let fetcher = ExchangeRateFetcher()
     
     // A default base currency for the initial load
-    private let defaultBaseCurrency = "USD"
+    private let defaultBaseCurrency = "UAH"
     
     /**
      Initiates the asynchronous fetch operation.
