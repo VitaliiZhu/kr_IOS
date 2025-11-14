@@ -1,19 +1,65 @@
 import SwiftUI
 
-// --- NEW: Add the AppSettings to the environment ---
-// Note: You must also ensure your ViewModel has access to the baseCurrency,
-// likely by updating its fetchRates function signature.
-
-struct ContentView: View {
-    // 1. Instantiate both the ViewModel and the Settings Model
+// --- NEW: Rename ContentView to MainTabView (Better naming convention) ---
+struct MainTabView: View {
     @StateObject private var settings = AppSettings()
     @StateObject private var viewModel = ExchangeRateViewModel()
     
-    // The list of currencies to display is now taken from settings
+    var body: some View {
+        // Wrap everything in a TabView
+        TabView {
+            // --- TAB 1: Exchange Rates List ---
+            ExchangeRatesListView(settings: settings, viewModel: viewModel)
+                .tabItem {
+                    Label("Rates", systemImage: "list.bullet.clipboard")
+                }
+            
+            // --- TAB 2: Interactive Converter ---
+            ConverterView(settings: settings, viewModel: viewModel)
+                .tabItem {
+                    Label("Converter", systemImage: "arrow.left.arrow.right.circle.fill")
+                }
+        }
+        // Task and onChange modifiers are kept here to manage data fetching for all tabs
+        .task {
+            await viewModel.fetchRates(baseCurrency: settings.baseCurrency)
+        }
+        .onChange(of: settings.baseCurrency) { oldValue, newValue in
+            if oldValue != newValue {
+                Task {
+                    await viewModel.fetchRates(baseCurrency: newValue)
+                }
+            }
+        }
+    }
+}
+
+// --- NEW: Rename the original ContentView content to ExchangeRatesListView ---
+// This keeps your code organized. You will need to move the original
+// ContentView struct content into this new struct and update the
+// references to `displayCurrencies` to use `settings.displayedCurrencies`.
+
+struct ExchangeRatesListView: View {
+    @ObservedObject var settings: AppSettings // Add settings access
+    @ObservedObject var viewModel: ExchangeRateViewModel // Add view model access
+    
+    // Moved the formatting function inside the view to keep it clean
+    private func formatUpdateTime(_ utcTime: String) -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        if let date = formatter.date(from: utcTime) {
+            let displayFormatter = DateFormatter()
+            displayFormatter.dateStyle = .medium
+            displayFormatter.timeStyle = .short
+            return displayFormatter.string(from: date)
+        }
+        return utcTime
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
-                // ... (Loading, Error, and Empty States remain the same) ...
+                // Your original ContentView Vack logic:
                 if viewModel.isLoading {
                     ProgressView("Fetching rates...")
                         .padding()
@@ -24,26 +70,20 @@ struct ContentView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                 }
-                
-                // --- 4. Data Loaded State (UPDATED) ---
                 else if let rates = viewModel.ratesResponse {
                     List {
-                        // Header with base currency and last update time
                         Section(header: Text("Base Currency: \(rates.baseCode)").font(.headline)) {
                             Text("Last Updated: \(formatUpdateTime(rates.timeLastUpdateUtc))")
                                 .font(.caption)
                                 .foregroundColor(.gray)
                         }
                             
-                        // Display the conversion rates for SELECTED currencies from settings
                         Section("Conversion Rates") {
-                            // !!! UPDATED to use settings.displayedCurrencies !!!
                             ForEach(settings.displayedCurrencies, id: \.self) { currencyCode in
                                 HStack {
                                     Text(currencyCode)
                                         .bold()
                                     Spacer()
-                                    // Safely access the rate and format it
                                     if let rate = rates.conversionRates[currencyCode] {
                                         Text(String(format: "%.4f", rate))
                                     } else {
@@ -56,7 +96,6 @@ struct ContentView: View {
                     }
                     .listStyle(.insetGrouped)
                 }
-                
                 else {
                     Text("No exchange rates data available.")
                         .foregroundColor(.secondary)
@@ -64,23 +103,7 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Global Exchange Rates")
-            
-            // 6. Use .task and .onChange to call the fetch function
-            // !!! UPDATED to use settings.baseCurrency !!!
-            .task {
-                await viewModel.fetchRates(baseCurrency: settings.baseCurrency)
-            }
-            
-            // Refetches data immediately when the base currency changes
-            .onChange(of: settings.baseCurrency) { oldValue, newValue in
-                if oldValue != newValue {
-                    Task {
-                        await viewModel.fetchRates(baseCurrency: newValue)
-                    }
-                }
-            }
-            
-            // --- NEW: Toolbar for Settings Button ---
+            // Settings button remains in the Rates View
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
@@ -92,22 +115,9 @@ struct ContentView: View {
             }
         }
     }
-    
-    // Helper function... (remains the same)
-    private func formatUpdateTime(_ utcTime: String) -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        if let date = formatter.date(from: utcTime) {
-            let displayFormatter = DateFormatter()
-            displayFormatter.dateStyle = .medium
-            displayFormatter.timeStyle = .short
-            return displayFormatter.string(from: date)
-        }
-        return utcTime
-    }
 }
 
 // Preview struct (Xcode 15+)
 #Preview {
-    ContentView()
+    MainTabView()
 }

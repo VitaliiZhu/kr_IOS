@@ -15,6 +15,7 @@
 		23789F702EC7056100DEB3CB /* conversion_rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F6F2EC7056100DEB3CB /* conversion_rates.swift */; };
 		23789F722EC70AC900DEB3CB /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F712EC70AC900DEB3CB /* AppSettings.swift */; };
 		23789F742EC70AF000DEB3CB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F732EC70AF000DEB3CB /* SettingsView.swift */; };
+		23789F762EC7198100DEB3CB /* ConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23789F752EC7198100DEB3CB /* ConverterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		23789F6F2EC7056100DEB3CB /* conversion_rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = conversion_rates.swift; sourceTree = "<group>"; };
 		23789F712EC70AC900DEB3CB /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		23789F732EC70AF000DEB3CB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		23789F752EC7198100DEB3CB /* ConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 		23789F5C2EBDD3C200DEB3CB /* kr */ = {
 			isa = PBXGroup;
 			children = (
+				23789F752EC7198100DEB3CB /* ConverterView.swift */,
 				23789F732EC70AF000DEB3CB /* SettingsView.swift */,
 				23789F712EC70AC900DEB3CB /* AppSettings.swift */,
 				23789F6F2EC7056100DEB3CB /* conversion_rates.swift */,
@@ -151,6 +154,7 @@
 			files = (
 				23789F602EBDD3C200DEB3CB /* ContentView.swift in Sources */,
 				23789F702EC7056100DEB3CB /* conversion_rates.swift in Sources */,
+				23789F762EC7198100DEB3CB /* ConverterView.swift in Sources */,
 				23789F6E2EBDDA5200DEB3CB /* ExchangeRateViewModel.swift in Sources */,
 				23789F742EC70AF000DEB3CB /* SettingsView.swift in Sources */,
 				23789F722EC70AC900DEB3CB /* AppSettings.swift in Sources */,
