@@ -1,15 +1,25 @@
 import Foundation
 import SwiftUI
 
-// This list should ideally come from your API/ViewModel after fetching
-// but for a starting point, we'll define a set of common currencies.
-let allAvailableCurrencies = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "CNY", "HKD", "INR", "PLN", "UAH"]
+let locale = Locale.current
+let currencyCode = locale.currency?.identifier
 
+// Create a Set for automatic uniqueness and sort it later
+let baseCodes: Set<String> = [
+    "USD", "EUR", "GBP", "JPY", "CAD", "AUD",
+    "CHF", "CNY", "HKD", "INR", "PLN", "UAH"
+]
+
+let localCodeArray = [currencyCode].compactMap { $0 }
+
+let finalCodesSet = baseCodes.union(localCodeArray)
+
+let allAvailableCurrencies = finalCodesSet.sorted()
 class AppSettings: ObservableObject {
-    // Stores the selected base currency (e.g., "UAH")
-    @AppStorage("baseCurrency") var baseCurrency: String = "USD" {
+    
+    @AppStorage("baseCurrency") var baseCurrency: String = (currencyCode ?? "USD"){
         didSet {
-            // Notifies the view model to refetch data when the base currency changes
+            
             objectWillChange.send()
         }
     }

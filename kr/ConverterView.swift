@@ -46,7 +46,7 @@ struct ConverterView: View {
     @ObservedObject var viewModel: ExchangeRateViewModel
     private let currentLocale = Locale.current
     // 1. Change the state variable to a String
-    @State private var inputAmountString: String = "1.0"
+    @State private var inputAmountString: String = "0"
     @State private var numericAmount: Double = 0.00
     // 2. Computed property to get the Double value (for calculations)
     private var inputAmount: Double {
@@ -98,7 +98,13 @@ struct ConverterView: View {
                                             }
                                         }
                         
-                        Text(settings.baseCurrency)
+                        Picker(settings.baseCurrency, selection: $settings.baseCurrency) {
+                            // Iterate over all available currencies for the picker
+                            ForEach(allAvailableCurrencies, id: \.self) { currency in
+                                Text(currency ?? settings.baseCurrency)
+                            }
+                        }
+                        .pickerStyle(.navigationLink)
                             .font(.title)
                             .foregroundColor(.secondary)
                     }

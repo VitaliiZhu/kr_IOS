@@ -20,7 +20,7 @@ struct SettingsView: View {
                 Picker("Select Base Currency", selection: $settings.baseCurrency) {
                     // Iterate over all available currencies for the picker
                     ForEach(allAvailableCurrencies, id: \.self) { currency in
-                        Text(currency)
+                        Text(currency ?? settings.baseCurrency)
                     }
                 }
                 .pickerStyle(.navigationLink) // Presents the options on a new screen
@@ -30,14 +30,14 @@ struct SettingsView: View {
             Section("Currencies to Display") {
                 ForEach(allAvailableCurrencies, id: \.self) { currencyCode in
                     // Bind the toggle to a computed boolean that checks if the currency is in the temporary list
-                    Toggle(currencyCode, isOn: Binding(
+                    Toggle(currencyCode ?? settings.baseCurrency, isOn: Binding(
                         get: {
-                            tempDisplayedCurrencies.contains(currencyCode)
+                            tempDisplayedCurrencies.contains(currencyCode ?? settings.baseCurrency)
                         },
                         set: { isToggled in
                             if isToggled {
                                 // Add to list if toggled ON
-                                tempDisplayedCurrencies.append(currencyCode)
+                                tempDisplayedCurrencies.append(currencyCode ?? settings.baseCurrency)
                             } else {
                                 // Remove from list if toggled OFF
                                 tempDisplayedCurrencies.removeAll(where: { $0 == currencyCode })
