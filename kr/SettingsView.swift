@@ -20,7 +20,7 @@ struct SettingsView: View {
                 Picker("Select Base Currency", selection: $settings.baseCurrency) {
                     // Iterate over all available currencies for the picker
                     ForEach(allAvailableCurrencies, id: \.self) { currency in
-                        Text(currency ?? settings.baseCurrency)
+                        Text(currency )
                     }
                 }
                 .pickerStyle(.navigationLink) // Presents the options on a new screen

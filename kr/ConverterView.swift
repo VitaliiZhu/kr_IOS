@@ -98,10 +98,10 @@ struct ConverterView: View {
                                             }
                                         }
                         
-                        Picker(settings.baseCurrency, selection: $settings.baseCurrency) {
+                        Picker("", selection: $settings.baseCurrency) {
                             // Iterate over all available currencies for the picker
                             ForEach(allAvailableCurrencies, id: \.self) { currency in
-                                Text(currency ?? settings.baseCurrency)
+                                Text(currency )
                             }
                         }
                         .pickerStyle(.navigationLink)
