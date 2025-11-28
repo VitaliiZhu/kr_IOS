@@ -85,7 +85,7 @@ struct ExchangeRatesListView: View {
                                         .bold()
                                     Spacer()
                                     if let rate = rates.conversionRates[currencyCode] {
-                                        Text(String(format: "%.4f", rate))
+                                        Text(String(format: "%.2f", rate))
                                     } else {
                                         Text("N/A")
                                             .foregroundColor(.secondary)
